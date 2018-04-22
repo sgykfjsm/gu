@@ -13,11 +13,17 @@ func TestIsContain(t *testing.T) {
 		Expect bool
 	}{
 		{true, []bool{true, false}, true},
+		{true, true, true},
 		{true, []bool{}, false},
+		{true, []string{"true", "false"}, false},
+		{"string", "string", true},
 		{"string", []string{"this", "is", "string", "slice"}, true},
-		{"string", "string", false},
+		{"string", []string{"this", "is", "slice"}, false},
+		{"string", []bool{true, false}, false},
 		{5, []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}, true},
+		{5, 5, true},
 		{1.0, []float64{0.1, 1.0, 2.2}, true},
+		{nil, nil, true},
 		{nil, []bool{true, false}, false},
 	}
 

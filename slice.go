@@ -5,10 +5,13 @@ import (
 )
 
 // Contains returns true if needle is found in haystack, otherwise it returns false.
+// If needle is different data type from haystack's type, false will be returned always.
 func Contains(needle, haystack interface{}) bool {
 	h := reflect.ValueOf(haystack)
-	if h.Kind() != reflect.Slice || h.Len() == 0 {
+	if h.Kind() == reflect.Slice && h.Len() == 0 {
 		return false
+	} else if h.Kind() != reflect.Slice {
+		return equals(needle, haystack)
 	}
 
 	islice := make([]interface{}, h.Len())
@@ -29,5 +32,20 @@ func Contains(needle, haystack interface{}) bool {
 			return true
 		}
 	}
+	return false
+}
+
+func equals(needle, haystack interface{}) bool {
+	needleType := reflect.TypeOf(needle)
+	haystackType := reflect.TypeOf(haystack)
+
+	if needle != nil && needleType.Kind() != haystackType.Kind() {
+		return false
+	}
+
+	if reflect.ValueOf(needle).String() == reflect.ValueOf(haystack).String() {
+		return true
+	}
+
 	return false
 }
