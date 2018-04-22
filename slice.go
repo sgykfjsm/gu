@@ -26,9 +26,9 @@ func Contains(needle, haystack interface{}) bool {
 		return false
 	}
 
-	nv := reflect.ValueOf(needle).String()
+	n := reflect.ValueOf(needle).String()
 	for i := range islice {
-		if nv == reflect.ValueOf(islice[i]).String() {
+		if n == reflect.ValueOf(islice[i]).String() {
 			return true
 		}
 	}
